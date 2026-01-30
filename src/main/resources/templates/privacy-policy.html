@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="HireNest - Privacy Policy and Data Protection"
+    />
+    <meta
+      name="keywords"
+      content="privacy policy, data protection, job portal, terms"
+    />
+    <meta name="author" content="HireNest" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <title>HireNest - Privacy Policy</title>
+
+    <style>
+      :root {
+        --primary-color: #1a73e8;
+        --secondary-color: #34a853;
+        --dark-color: #1f2937;
+        --light-color: #ffffff;
+        --gray-color: #f8f9fa;
+        --gradient: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        line-height: 1.6;
+        background-color: var(--gray-color);
+      }
+
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.98);
+        padding: 1rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      .logo a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-buttons {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-btn {
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .register-btn {
+        background: var(--gradient);
+        color: white;
+      }
+
+      .login-btn {
+        background-color: transparent;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+      }
+
+      .privacy-section {
+        padding: 8rem 5% 4rem;
+        min-height: calc(100vh - 80px);
+      }
+
+      .privacy-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .privacy-title {
+        font-size: 2.5rem;
+        color: var(--dark-color);
+        margin-bottom: 2rem;
+        text-align: center;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        color: var(--dark-color);
+        margin: 2.5rem 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-color);
+      }
+
+      .privacy-text {
+        color: var(--dark-color);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+      }
+
+      .footer {
+        background-color: var(--dark-color);
+        color: white;
+        padding: 1.3rem 5%;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-links a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .footer-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+
+      .footer-links a:hover::after {
+        width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .privacy-section {
+          padding: 6rem 1rem 2rem;
+        }
+
+        .privacy-content {
+          padding: 2rem;
+        }
+
+        .privacy-title {
+          font-size: 2rem;
+        }
+
+        .nav-buttons {
+          gap: 1rem;
+        }
+
+        .nav-btn {
+          padding: 0.6rem 1.5rem;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="/">
+          <img
+            src="/assets/favicon.png"
+            alt="HireNest Logo"
+            style="width: 30px; height: 30px; margin-right: 10px"
+          />
+          HireNest
+        </a>
+      </div>
+      <div class="nav-buttons">
+        <a href="/login"><button class="nav-btn login-btn">Login</button></a>
+        <a href="/jobseeker/register"
+          ><button class="nav-btn register-btn">Register</button></a
+        >
+      </div>
+    </nav>
+
+    <section class="privacy-section">
+      <div class="privacy-content">
+        <h1 class="privacy-title">Privacy Policy</h1>
+        <p class="privacy-text">
+          At HireNest, we take your privacy seriously. This Privacy Policy
+          explains how we collect, use, disclose, and safeguard your information
+          when you use our website and services.
+        </p>
+
+        <h2 class="section-title">Information We Collect</h2>
+        <p class="privacy-text">
+          We collect information that you provide directly to us, including but
+          not limited to your name, email address, phone number, resume, and job
+          preferences. We also automatically collect certain information about
+          your device when you use our platform.
+        </p>
+
+        <h2 class="section-title">How We Use Your Information</h2>
+        <p class="privacy-text">
+          We use the information we collect to provide, maintain, and improve
+          our services, to communicate with you, and to match you with potential
+          job opportunities or candidates.
+        </p>
+
+        <h2 class="section-title">Information Sharing</h2>
+        <p class="privacy-text">
+          We may share your information with employers or job seekers as
+          necessary to facilitate job matching. We do not sell your personal
+          information to third parties.
+        </p>
+
+        <h2 class="section-title">Data Security</h2>
+        <p class="privacy-text">
+          We implement appropriate technical and organizational measures to
+          protect your personal information against unauthorized access,
+          alteration, disclosure, or destruction.
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="/about-us">About Us</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

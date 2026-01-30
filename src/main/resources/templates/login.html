@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="HireNest - Find your dream job opportunities across various industries"
+    />
+    <meta
+      name="keywords"
+      content="jobs, career, employment, job search, job portal, hiring, job opportunities"
+    />
+    <meta name="author" content="HireNest" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <title>HireNest - Login</title>
+
+    <style>
+      :root {
+        --primary-color: #1a73e8;
+        --secondary-color: #34a853;
+        --dark-color: #1f2937;
+        --light-color: #ffffff;
+        --gray-color: #f8f9fa;
+        --gradient: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        line-height: 1.6;
+        background-color: var(--gray-color);
+      }
+
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.98);
+        padding: 1rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      .logo a {
+        text-decoration: none;
+      }
+
+      .nav-buttons {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-btn {
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .register-btn {
+        background: var(--gradient);
+        color: white;
+      }
+
+      .register-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+      }
+
+      .login-btn {
+        background-color: transparent;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+      }
+
+      .login-btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .login-container {
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 1rem;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+
+      .login-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .login-form h1 {
+        color: var(--dark-color);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .login-form input {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .login-form input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+      }
+
+      .login-form button {
+        width: 100%;
+        padding: 1rem;
+        background: var(--gradient);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .login-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+      }
+
+      .alert-message {
+        position: fixed;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        z-index: 1001;
+        animation: slideDown 0.5s ease-out;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .alert-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0 0.5rem;
+        color: inherit;
+        opacity: 0.7;
+      }
+
+      .alert-close:hover {
+        opacity: 1;
+      }
+
+      @keyframes slideDown {
+        from {
+          top: -100px;
+          opacity: 0;
+        }
+
+        to {
+          top: 100px;
+          opacity: 1;
+        }
+      }
+
+      .footer {
+        background-color: var(--dark-color);
+        color: white;
+        padding: 1.3rem 5%;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-links a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .footer-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+
+      .footer-links a:hover::after {
+        width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .nav-buttons {
+          gap: 1rem;
+        }
+
+        .nav-btn {
+          padding: 0.6rem 1.5rem;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="/" style="display: flex; align-items: center">
+          <img
+            src="/assets/favicon.png"
+            alt="HireNest Logo"
+            style="width: 30px; height: 30px; margin-right: 10px"
+          />
+          HireNest
+        </a>
+      </div>
+      <div class="nav-buttons">
+        <a href="/login"><button class="nav-btn login-btn">Login</button></a>
+        <a href="/jobseeker/register"
+          ><button class="nav-btn register-btn">Register</button></a
+        >
+      </div>
+    </nav>
+    <div th:if="${session.success}" class="alert-message success">
+      <span th:text="${session.success}"></span>
+      <button
+        class="alert-close"
+        onclick="this.parentElement.style.display='none'"
+      >
+        ×
+      </button>
+      <th:block th:text="${@messageRemover.remove()}"></th:block>
+    </div>
+    <div th:if="${session.error}" class="alert-message error">
+      <span th:text="${session.error}"></span>
+      <button
+        class="alert-close"
+        onclick="this.parentElement.style.display='none'"
+      >
+        ×
+      </button>
+      <th:block th:text="${@messageRemover.remove()}"></th:block>
+    </div>
+
+    <div class="login-container">
+      <div class="login-form">
+        <h1>Login</h1>
+        <form action="/login" method="post">
+          <input type="text" name="emph" placeholder="Email or Phone Number" />
+          <input type="password" name="password" placeholder="Password" />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="/about-us">About Us</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      setTimeout(function () {
+        const alertMessages = document.querySelectorAll(".alert-message");
+        alertMessages.forEach((message) => {
+          message.style.display = "none";
+        });
+      }, 2000);
+    </script>
+  </body>
+</html>

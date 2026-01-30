@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="HireNest - Browse Available Jobs" />
+    <meta name="keywords" content="jobs, career opportunities, job listings" />
+    <meta name="author" content="HireNest" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>HireNest - Available Jobs</title>
+    <style>
+      :root {
+        --primary-color: #1a73e8;
+        --secondary-color: #34a853;
+        --dark-color: #1f2937;
+        --light-color: #ffffff;
+        --gray-color: #f8f9fa;
+        --gradient: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        line-height: 1.6;
+        background-color: var(--gray-color);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.98);
+        padding: 1rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .logo a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+      .content {
+        flex: 1;
+        padding: 8rem 5% 4rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .page-title {
+        font-size: 2.5rem;
+        color: var(--dark-color);
+        margin-bottom: 2rem;
+        text-align: center;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .jobs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+      .job-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .job-card:hover {
+        transform: translateY(-10px);
+      }
+      .job-card h3 {
+        color: var(--dark-color);
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--gray-color);
+      }
+      .job-detail {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        gap: 1rem;
+      }
+      .job-detail strong {
+        min-width: 120px;
+        color: var(--dark-color);
+      }
+      .apply-btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--gradient);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1.5rem;
+      }
+      .apply-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+      }
+      .home-btn {
+        background: var(--gradient);
+        color: white;
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 25px;
+        text-decoration: none;
+        display: inline-block;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-top: 2rem;
+      }
+      .home-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+      }
+      .logout-btn {
+        background: transparent;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+        padding: 0.8rem 2rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .logout-btn:hover {
+        background: var(--gradient);
+        color: white;
+        border-color: transparent;
+      }
+      .alert-message {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        z-index: 1000;
+        animation: slideIn 0.5s ease-out;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .success {
+        background-color: rgba(52, 168, 83, 0.1);
+        color: var(--secondary-color);
+        border: 1px solid var(--secondary-color);
+      }
+      .error {
+        background-color: rgba(234, 67, 53, 0.1);
+        color: #ea4335;
+        border: 1px solid #ea4335;
+      }
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @media (max-width: 768px) {
+        .content {
+          padding: 6rem 1rem 2rem;
+        }
+
+        .jobs-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="/jobseeker/home">
+          <img
+            src="/assets/favicon.png"
+            alt="HireNest Logo"
+            style="width: 30px; height: 30px; margin-right: 10px"
+          />
+          HireNest
+        </a>
+      </div>
+      <a href="/logout" class="logout-btn"
+        >Logout <i class="fas fa-sign-out-alt"></i
+      ></a>
+    </nav>
+    <div class="content">
+      <h1 class="page-title">Available Jobs</h1>
+      <div th:if="${session.success}" class="alert-message success">
+        <span th:text="${session.success}"></span>
+        <th:block th:text="${@messageRemover.remove()}"></th:block>
+      </div>
+      <div th:if="${session.error}" class="alert-message error">
+        <span th:text="${session.error}"></span>
+        <th:block th:text="${@messageRemover.remove()}"></th:block>
+      </div>
+      <div class="jobs-grid">
+        <div class="job-card" th:each="job:${jobs}">
+          <h3 th:text="${job.role}">Role</h3>
+          <div class="job-detail">
+            <strong><i class="fas fa-building"></i> Company:</strong>
+            <span th:text="${job.recruiter.companyName}"></span>
+          </div>
+          <div class="job-detail">
+            <strong><i class="fas fa-money-bill-wave"></i> Package:</strong>
+            <span th:text="${job.ctc}+' LPA'"></span>
+          </div>
+          <div class="job-detail">
+            <strong><i class="fas fa-info-circle"></i> Description:</strong>
+            <span th:text="${job.description}"></span>
+          </div>
+          <div class="job-detail">
+            <strong><i class="fas fa-briefcase"></i> Experience:</strong>
+            <span th:text="${job.experience}+' months'"></span>
+          </div>
+          <div class="job-detail">
+            <strong><i class="fas fa-tools"></i> Skills:</strong>
+            <span th:text="${job.skills}"></span>
+          </div>
+          <div class="job-detail">
+            <strong><i class="fas fa-map-marker-alt"></i> Location:</strong>
+            <span th:text="${job.location}"></span>
+          </div>
+          <div class="job-detail">
+            <strong><i class="fas fa-user"></i> Recruiter:</strong>
+            <span th:text="${job.recruiter.name}"></span>
+          </div>
+          <div class="job-detail">
+            <strong><i class="fas fa-envelope"></i> Contact:</strong>
+            <span th:text="${job.recruiter.email}"></span>
+          </div>
+          <a th:href="'/jobseeker/apply/'+${job.id}">
+            <button class="apply-btn">
+              <i class="fas fa-paper-plane"></i> Apply Now
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const alerts = document.querySelectorAll(".alert-message");
+        alerts.forEach((alert) => {
+          setTimeout(() => {
+            alert.style.display = "none";
+          }, 2000);
+        });
+      });
+    </script>
+  </body>
+</html>

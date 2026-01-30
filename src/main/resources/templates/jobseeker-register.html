@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="HireNest - Register as a Job Seeker" />
+    <meta
+      name="keywords"
+      content="jobs, career, employment, job search, job portal, hiring, registration"
+    />
+    <meta name="author" content="HireNest" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <title>HireNest - Register as Job Seeker</title>
+
+    <style>
+      :root {
+        --primary-color: #1a73e8;
+        --secondary-color: #34a853;
+        --dark-color: #1f2937;
+        --light-color: #ffffff;
+        --gray-color: #f8f9fa;
+        --gradient: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        line-height: 1.6;
+        background-color: var(--gray-color);
+      }
+
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.98);
+        padding: 1rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      .logo a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-buttons {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-btn {
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .register-btn {
+        background: var(--gradient);
+        color: white;
+      }
+
+      .login-btn {
+        background-color: transparent;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+      }
+
+      .register-container {
+        min-height: 100vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 6rem 2rem 2rem;
+      }
+
+      .register-form {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .register-form h1 {
+        color: var(--dark-color);
+        margin-bottom: 2rem;
+        text-align: center;
+        font-size: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--dark-color);
+        font-weight: 500;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+
+      .register-form button {
+        width: 100%;
+        padding: 1rem;
+        background: var(--gradient);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+      }
+
+      .register-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+      }
+
+      .register-form p {
+        text-align: center;
+        color: var(--dark-color);
+      }
+
+      .register-form p a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .footer {
+        background-color: var(--dark-color);
+        color: white;
+        padding: 1.3rem 5%;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-links a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .footer-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+
+      .footer-links a:hover::after {
+        width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .nav-buttons {
+          gap: 1rem;
+        }
+
+        .nav-btn {
+          padding: 0.6rem 1.5rem;
+        }
+
+        .register-container {
+          padding: 5rem 1rem 1rem;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="/">
+          <img
+            src="/assets/favicon.png"
+            alt="HireNest Logo"
+            style="width: 30px; height: 30px; margin-right: 10px"
+          />
+          HireNest
+        </a>
+      </div>
+      <div class="nav-buttons">
+        <a href="/login"><button class="nav-btn login-btn">Login</button></a>
+        <a href="/jobseeker/register"
+          ><button class="nav-btn register-btn">Register</button></a
+        >
+      </div>
+    </nav>
+
+    <div class="register-container">
+      <div class="register-form">
+        <h1>Job Seeker Register</h1>
+        <form
+          action="/jobseeker/register"
+          method="post"
+          th:object="${jobSeeker}"
+        >
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" />
+            <span class="error-message" th:errors="*{name}"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" />
+            <span class="error-message" th:errors="*{email}"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="mobile">Mobile</label>
+            <input type="tel" id="mobile" th:field="*{mobile}" />
+            <span class="error-message" th:errors="*{mobile}"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}" />
+            <span class="error-message" th:errors="*{password}"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              th:field="*{confirmPassword}"
+            />
+            <span class="error-message" th:errors="*{confirmPassword}"></span>
+          </div>
+
+          <button type="submit">Register</button>
+          <p>
+            Are you a Recruiter? <a href="/recruiter/register">Register here</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="/about-us">About Us</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

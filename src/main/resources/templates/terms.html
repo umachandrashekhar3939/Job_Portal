@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="HireNest - Terms of Service and Usage Guidelines"
+    />
+    <meta
+      name="keywords"
+      content="terms of service, terms and conditions, job portal, legal"
+    />
+    <meta name="author" content="HireNest" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <title>HireNest - Terms of Service</title>
+
+    <style>
+      :root {
+        --primary-color: #1a73e8;
+        --secondary-color: #34a853;
+        --dark-color: #1f2937;
+        --light-color: #ffffff;
+        --gray-color: #f8f9fa;
+        --gradient: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        line-height: 1.6;
+        background-color: var(--gray-color);
+      }
+
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.98);
+        padding: 1rem 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: transform 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+      }
+
+      .logo a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-buttons {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-btn {
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .register-btn {
+        background: var(--gradient);
+        color: white;
+      }
+
+      .login-btn {
+        background-color: transparent;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+      }
+
+      .terms-section {
+        padding: 8rem 5% 4rem;
+        min-height: calc(100vh - 80px);
+      }
+
+      .terms-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .terms-title {
+        font-size: 2.5rem;
+        color: var(--dark-color);
+        margin-bottom: 2rem;
+        text-align: center;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        color: var(--dark-color);
+        margin: 2.5rem 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-color);
+      }
+
+      .terms-text {
+        color: var(--dark-color);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+      }
+
+      .footer {
+        background-color: var(--dark-color);
+        color: white;
+        padding: 1.3rem 5%;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-links a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .footer-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+
+      .footer-links a:hover::after {
+        width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .terms-section {
+          padding: 6rem 1rem 2rem;
+        }
+
+        .terms-content {
+          padding: 2rem;
+        }
+
+        .terms-title {
+          font-size: 2rem;
+        }
+
+        .nav-buttons {
+          gap: 1rem;
+        }
+
+        .nav-btn {
+          padding: 0.6rem 1.5rem;
+        }
+
+        .footer-links {
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="/">
+          <img
+            src="/assets/favicon.png"
+            alt="HireNest Logo"
+            style="width: 30px; height: 30px; margin-right: 10px"
+          />
+          HireNest
+        </a>
+      </div>
+      <div class="nav-buttons">
+        <a href="/login"><button class="nav-btn login-btn">Login</button></a>
+        <a href="/jobseeker/register"
+          ><button class="nav-btn register-btn">Register</button></a
+        >
+      </div>
+    </nav>
+
+    <section class="terms-section">
+      <div class="terms-content">
+        <h1 class="terms-title">Terms of Service</h1>
+        <p class="terms-text">
+          Welcome to HireNest. By accessing and using our platform, you agree to
+          comply with and be bound by these terms and conditions.
+        </p>
+
+        <h2 class="section-title">1. Acceptance of Terms</h2>
+        <p class="terms-text">
+          By accessing and using HireNest, you accept and agree to be bound by
+          the terms and provisions of this agreement.
+        </p>
+
+        <h2 class="section-title">2. User Registration</h2>
+        <p class="terms-text">
+          To access certain features of the platform, you may be required to
+          register for an account. You agree to provide accurate information
+          during the registration process.
+        </p>
+
+        <h2 class="section-title">3. Privacy Policy</h2>
+        <p class="terms-text">
+          Your use of HireNest is also governed by our Privacy Policy. Please
+          review our Privacy Policy, which also governs the site and informs
+          users of our data collection practices.
+        </p>
+
+        <h2 class="section-title">4. User Conduct</h2>
+        <p class="terms-text">
+          You agree to use HireNest only for lawful purposes and in a way that
+          does not infringe the rights of, restrict or inhibit anyone else's use
+          and enjoyment of the platform.
+        </p>
+
+        <h2 class="section-title">5. Modifications</h2>
+        <p class="terms-text">
+          We reserve the right to modify these terms at any time. We do so by
+          posting and drawing attention to the updated terms on the site. Your
+          continued use of HireNest after changes to these terms confirms your
+          acceptance of the updated terms.
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="/about-us">About Us</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
