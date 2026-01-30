@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  job-portal-app:
+    image: job-portal-app:latest
+    container_name: job-portal-container
+    ports:
+      - "8080:8080"
+    restart: always
