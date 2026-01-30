@@ -4,34 +4,38 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: jobportal-db
+    container_name: mysql-db
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: jobportal
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: job_portal_db
       MYSQL_USER: jobuser
-      MYSQL_PASSWORD: userpassword
+      MYSQL_PASSWORD: jobpass
     ports:
-      - "3306:3306"   # optional if you want to connect from host
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
-    volumes:
-      - db_data:/var/lib/mysql
+      start_period: 30s
 
   app:
     build: .
-    container_name: jobportal-app
-    ports:
-      - "8085:8085"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SERVER_PORT=8085
+    container_name: job-portal-app
+    restart: always
     depends_on:
       db:
         condition: service_healthy
-    restart: unless-stopped
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/job_portal_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: jobuser
+      SPRING_DATASOURCE_PASSWORD: jobpass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
 volumes:
-  db_data:
+  mysql_data:
