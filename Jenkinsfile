@@ -5,7 +5,7 @@ pipeline {
         choice(
             name: 'ACTION',
             choices: ['build', 'deploy', 'remove'],
-            description: 'Choose pipeline action'
+            description: 'Select pipeline action'
         )
     }
 
@@ -23,17 +23,13 @@ pipeline {
             steps {
                 echo "===== BUILD STAGE ====="
                 sh '''
-                ./mvnw clean package -DskipTests
+                ./mvnw clean package -DskipTests || mvn clean package -DskipTests
                 docker build -t $IMAGE_NAME:latest .
                 '''
             }
             post {
-                success {
-                    echo "Build completed successfully"
-                }
-                failure {
-                    echo "Build failed"
-                }
+                success { echo "Build completed successfully" }
+                failure { echo "Build failed" }
             }
         }
 
@@ -44,17 +40,13 @@ pipeline {
             steps {
                 echo "===== DEPLOY STAGE ====="
                 sh '''
-                docker compose down || true
-                docker compose up -d
+                docker-compose down || true
+                docker-compose up -d --build
                 '''
             }
             post {
-                success {
-                    echo "Deployment completed successfully"
-                }
-                failure {
-                    echo "Deployment failed"
-                }
+                success { echo "Deployment successful" }
+                failure { echo "Deployment failed" }
             }
         }
 
@@ -70,12 +62,8 @@ pipeline {
                 '''
             }
             post {
-                success {
-                    echo "Container and image removed successfully"
-                }
-                failure {
-                    echo "Remove stage failed"
-                }
+                success { echo "Cleanup successful" }
+                failure { echo "Cleanup failed" }
             }
         }
     }
