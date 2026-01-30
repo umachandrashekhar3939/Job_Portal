@@ -1,36 +1,33 @@
 # =========================
-# Stage 1: Build Stage
+# Stage 1: Build with Maven
 # =========================
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
-# Install MySQL client (optional but useful for debugging/testing)
-RUN apt-get update && apt-get install -y default-mysql-client
-
-# Copy pom.xml and download dependencies (cache optimization)
+# Copy pom.xml and download dependencies first (for caching)
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copy full project source
+# Copy source code
 COPY src ./src
 
-# Build Spring Boot JAR
+# Build the application JAR
 RUN mvn clean package -DskipTests
 
 
 # =========================
-# Stage 2: Runtime Stage
+# Stage 2: Runtime (Java)
 # =========================
 FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
-# Copy built jar from Stage 1
+# Copy JAR from build stage
 COPY --from=build /app/target/*.jar app.jar
 
 # Expose application port
 EXPOSE 8080
 
-# Run Spring Boot application
+# Run Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]
