@@ -11,40 +11,30 @@ pipeline {
 
     environment {
         IMAGE_NAME = "job-portal"
-        DOCKERHUB_USER = "your_dockerhub_username"
-        IMAGE_TAG = "latest"
+        IMAGE_TAG  = "latest"
         COMPOSE_FILE = "docker-compose.yml"
     }
 
     stages {
 
-        stage('Build') {
+        stage('Build & Push Image') {
             when {
                 expression { params.ACTION == 'build' }
             }
             steps {
                 echo "===== BUILD STAGE STARTED ====="
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
+
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
                     sh """
-                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                    echo "${DH_PASS}" | docker login -u "${DH_USER}" --password-stdin
-                    docker push ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                    docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG} || true
-                    docker rmi -f ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG} || true
-                    docker logout
+                      docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} .
+                      echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
+                      docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                      docker logout
                     """
-                }
-            }
-            post {
-                success {
-                    echo "Build, Tag & Push Completed Successfully"
-                }
-                failure {
-                    echo "Build or Push Failed"
-                }
-                always {
-                    echo "===== BUILD STAGE FINISHED ====="
                 }
             }
         }
@@ -56,20 +46,9 @@ pipeline {
             steps {
                 echo "===== DEPLOY STAGE STARTED ====="
                 sh """
-                docker-compose pull
-                docker-compose up -d --build
+                  docker-compose pull
+                  docker-compose up -d
                 """
-            }
-            post {
-                success {
-                    echo "Deployment Successful"
-                }
-                failure {
-                    echo "Deployment Failed"
-                }
-                always {
-                    echo "===== DEPLOY STAGE FINISHED ====="
-                }
             }
         }
 
@@ -80,19 +59,8 @@ pipeline {
             steps {
                 echo "===== REMOVE STAGE STARTED ====="
                 sh """
-                docker-compose down --remove-orphans
+                  docker-compose down --remove-orphans
                 """
-            }
-            post {
-                success {
-                    echo "Application Removed Successfully"
-                }
-                failure {
-                    echo "Remove Failed"
-                }
-                always {
-                    echo "===== REMOVE STAGE FINISHED ====="
-                }
             }
         }
     }
