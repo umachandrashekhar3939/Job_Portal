@@ -1,21 +1,41 @@
-version: "3.8"
+version: '3.3'
 
 services:
 
-  maven-build:
-    image: maven:3.9.6-eclipse-temurin-17
-    container_name: maven-builder
-    working_dir: /app
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: job_portal_db
+      MYSQL_USER: jobuser
+      MYSQL_PASSWORD: jobpass
+    ports:
+      - "3306:3306"
     volumes:
-      - .:/app
-    command: mvn clean package -DskipTests
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
-  springboot-app:
+  app:
     build: .
-    image: job-portal-app:latest
-    container_name: job-portal-container
+    container_name: job-portal-app
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "8085:8080"
-    depends_on:
-      - maven-build
-    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/job_portal_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: jobuser
+      SPRING_DATASOURCE_PASSWORD: jobpass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+volumes:
+  mysql_data:
