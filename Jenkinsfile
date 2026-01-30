@@ -56,8 +56,8 @@ pipeline {
             steps {
                 echo "===== DEPLOY STAGE STARTED ====="
                 sh """
-                docker-compose pull
-                docker-compose up -d --build
+                docker compose pull
+                docker compose up -d --build
                 """
             }
             post {
@@ -80,7 +80,7 @@ pipeline {
             steps {
                 echo "===== REMOVE STAGE STARTED ====="
                 sh """
-                docker-compose down --remove-orphans
+                docker compose down --remove-orphans
                 """
             }
             post {
