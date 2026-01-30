@@ -23,7 +23,7 @@ services:
       start_period: 30s
 
   app:
-    image:uma777/job-portal:latest
+    build: .
     container_name: job-portal-app
     restart: always
     depends_on:
