@@ -5,14 +5,14 @@ pipeline {
         choice(
             name: 'ACTION',
             choices: ['build', 'deploy', 'remove'],
-            description: 'Select action: build, deploy, or remove'
+            description: 'Select pipeline action'
         )
     }
 
     environment {
         IMAGE_NAME = "job-portal"
-        DOCKERHUB_USERNAME = "your_dockerhub_username"
-        TAG = "latest"
+        DOCKERHUB_USER = "your_dockerhub_username"
+        IMAGE_TAG = "latest"
         COMPOSE_FILE = "docker-compose.yml"
     }
 
@@ -23,27 +23,28 @@ pipeline {
                 expression { params.ACTION == 'build' }
             }
             steps {
-                echo "Building Docker Image..."
-                sh """
-                docker build -t ${IMAGE_NAME}:${TAG} .
-                docker tag ${IMAGE_NAME}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG}
-                echo "Logging into DockerHub..."
-                docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASS}
-                docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG}
-                docker rmi ${IMAGE_NAME}:${TAG}
-                docker rmi ${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG}
-                docker logout
-                """
+                echo "===== BUILD STAGE STARTED ====="
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
+                    sh """
+                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                    echo "${DH_PASS}" | docker login -u "${DH_USER}" --password-stdin
+                    docker push ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+                    docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG} || true
+                    docker rmi -f ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG} || true
+                    docker logout
+                    """
+                }
             }
             post {
                 success {
-                    echo "Docker Image Build & Push Successful"
+                    echo "Build, Tag & Push Completed Successfully"
                 }
                 failure {
-                    echo "Docker Build or Push Failed"
+                    echo "Build or Push Failed"
                 }
                 always {
-                    echo "Build Stage Completed"
+                    echo "===== BUILD STAGE FINISHED ====="
                 }
             }
         }
@@ -53,20 +54,21 @@ pipeline {
                 expression { params.ACTION == 'deploy' }
             }
             steps {
-                echo "Deploying Application using Docker Compose..."
+                echo "===== DEPLOY STAGE STARTED ====="
                 sh """
+                docker-compose pull
                 docker-compose up -d --build
                 """
             }
             post {
                 success {
-                    echo "Application Deployed Successfully"
+                    echo "Deployment Successful"
                 }
                 failure {
                     echo "Deployment Failed"
                 }
                 always {
-                    echo "Deploy Stage Completed"
+                    echo "===== DEPLOY STAGE FINISHED ====="
                 }
             }
         }
@@ -76,9 +78,9 @@ pipeline {
                 expression { params.ACTION == 'remove' }
             }
             steps {
-                echo "Stopping and Removing Containers..."
+                echo "===== REMOVE STAGE STARTED ====="
                 sh """
-                docker-compose down
+                docker-compose down --remove-orphans
                 """
             }
             post {
@@ -86,13 +88,12 @@ pipeline {
                     echo "Application Removed Successfully"
                 }
                 failure {
-                    echo "Remove Operation Failed"
+                    echo "Remove Failed"
                 }
                 always {
-                    echo "Remove Stage Completed"
+                    echo "===== REMOVE STAGE FINISHED ====="
                 }
             }
         }
-
     }
 }
