@@ -1,9 +1,21 @@
 version: "3.8"
 
 services:
-  job-portal-app:
+
+  maven-build:
+    image: maven:3.9.6-eclipse-temurin-17
+    container_name: maven-builder
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: mvn clean package -DskipTests
+
+  springboot-app:
+    build: .
     image: job-portal-app:latest
     container_name: job-portal-container
     ports:
-      - "8080:8080"
+      - "8085:8080"
+    depends_on:
+      - maven-build
     restart: always
