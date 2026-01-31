@@ -44,8 +44,7 @@
   #depends_on:
     #db:
       #condition: service_healthy
-
-   version: "3.8"
+version: "3.8"
 
 services:
   db:
@@ -76,4 +75,3 @@ services:
       SPRING_DATASOURCE_PASSWORD: jobpass
     depends_on:
       - db
-
