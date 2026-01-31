@@ -5,96 +5,101 @@ pipeline {
         choice(
             name: 'ACTION',
             choices: ['build', 'deploy', 'remove'],
-            description: 'Select pipeline action'
+            description: 'Choose pipeline action'
+        )
+        string(
+            name: 'IMAGE_NAME',
+            defaultValue: 'spring_project2003',
+            description: 'Docker image name'
+        )
+        string(
+            name: 'IMAGE_TAG',
+            defaultValue: 'v1',
+            description: 'Docker image tag'
+        )
+        string(
+            name: 'DOCKERHUB_USERNAME',
+            defaultValue: 'uma777',
+            description: 'DockerHub username'
         )
     }
 
     environment {
-        IMAGE_NAME = "job-portal"
-        DOCKERHUB_USER = "your_dockerhub_username"
-        IMAGE_TAG = "latest"
-        COMPOSE_FILE = "docker-compose.yml"
+        IMAGE = "${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}"
     }
 
     stages {
 
-        stage('Build') {
-            when {
-                expression { params.ACTION == 'build' }
-            }
+        /* ================= CHECKOUT ================= */
+        stage('Checkout Code') {
+            when { expression { params.ACTION == 'build' } }
             steps {
-                echo "===== BUILD STAGE STARTED ====="
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DH_USER', passwordVariable: 'DH_PASS')]) {
-                    sh """
-                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                    docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                    echo "${DH_PASS}" | docker login -u "${DH_USER}" --password-stdin
-                    docker push ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG}
-                    docker rmi -f ${IMAGE_NAME}:${IMAGE_TAG} || true
-                    docker rmi -f ${DH_USER}/${IMAGE_NAME}:${IMAGE_TAG} || true
-                    docker logout
-                    """
-                }
+                git branch: 'master',
+                    url: 'https://github.com/umachandrashekhar3939/Job_Portal.git',
+                    credentialsId: 'github-creds'
             }
-            post {
-                success {
-                    echo "Build, Tag & Push Completed Successfully"
-                }
-                failure {
-                    echo "Build or Push Failed"
-                }
-                always {
-                    echo "===== BUILD STAGE FINISHED ====="
+        }
+
+        /* ================= BUILD ================= */
+        stage('Build Docker Image') {
+            when { expression { params.ACTION == 'build' } }
+            steps {
+                sh 'docker build -t $IMAGE .'
+            }
+        }
+
+        stage('Docker Login') {
+            when { expression { params.ACTION == 'build' } }
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-1234',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                 }
             }
         }
 
+        stage('Docker Push') {
+            when { expression { params.ACTION == 'build' } }
+            steps {
+                sh 'docker push $IMAGE'
+            }
+        }
+
+        stage('Delete Local Image') {
+            when { expression { params.ACTION == 'build' } }
+            steps {
+                sh 'docker rmi $IMAGE || true'
+            }
+        }
+
+        /* ================= DEPLOY ================= */
         stage('Deploy') {
-            when {
-                expression { params.ACTION == 'deploy' }
-            }
+            when { expression { params.ACTION == 'deploy' } }
             steps {
-                echo "===== DEPLOY STAGE STARTED ====="
-                sh """
+                sh '''
+                docker-compose down || true
                 docker-compose pull
-                docker-compose up -d --build
-                """
-            }
-            post {
-                success {
-                    echo "Deployment Successful"
-                }
-                failure {
-                    echo "Deployment Failed"
-                }
-                always {
-                    echo "===== DEPLOY STAGE FINISHED ====="
-                }
+                docker-compose up -d
+                '''
             }
         }
 
+        /* ================= REMOVE ================= */
         stage('Remove') {
-            when {
-                expression { params.ACTION == 'remove' }
-            }
+            when { expression { params.ACTION == 'remove' } }
             steps {
-                echo "===== REMOVE STAGE STARTED ====="
-                sh """
-                docker-compose down --remove-orphans
-                """
-            }
-            post {
-                success {
-                    echo "Application Removed Successfully"
-                }
-                failure {
-                    echo "Remove Failed"
-                }
-                always {
-                    echo "===== REMOVE STAGE FINISHED ====="
-                }
+                sh 'docker-compose down || true'
             }
         }
     }
-}
 
+    post {
+        always {
+            sh 'docker logout || true'
+            echo "Pipeline execution completed successfully"
+        }
+    }
+}
